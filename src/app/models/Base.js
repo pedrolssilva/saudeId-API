@@ -53,6 +53,22 @@ const Base = {
       await client.close();
     }
   },
+  async findMany(queryParams, options = []){
+    try {
+      await client.connect();
+      const foundCollection = database.collection(this.collection);
+
+      const cursor = await foundCollection.find(queryParams, options);
+      if ((await cursor.count()) === 0) {
+        console.log("No items found!");
+        return [];
+      }
+
+      return await cursor.toArray();
+    } finally {
+      await client.close();
+    }
+  },
   async deleteOne(id){
     try {
       await client.connect();
