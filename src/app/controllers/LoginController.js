@@ -1,6 +1,6 @@
 const { hash } = require("bcryptjs");
-const jwt = require('jsonwebtoken');
-var {ObjectId} = require("mongodb")
+const {ObjectId} = require("mongodb")
+const { create: createToken, validate: validateToken } = require("../utils/manageToken");
 const User = require("../models/User")
 const Session = require("../models/Session")
 
@@ -33,12 +33,12 @@ module.exports = {
       const {user} = req;
       console.log(`[LoginController - logout] user:`,user);
       const userId = new ObjectId(user._id).toString();
+      const expiresTokenIn5Minutes = 300;
+      
       let userSession = await Session.findOne({userId: userId});
       if(!userSession){
-        const token = jwt.sign({ userId }, process.env.JWT_SECRET_KEY, {
-          expiresIn: 300 // expires in 5min
-        });
-
+        const token = createToken({userId},expiresTokenIn5Minutes)
+        
         const sessionInfo = {
           userId,
           token: token,
@@ -46,6 +46,15 @@ module.exports = {
         
         await Session.insertOne(sessionInfo);
         userSession = sessionInfo;
+      }
+
+      try {
+        validateToken(userSession.token);
+      } catch (error) {
+        console.log(`[LoginController - logout] updating token:`,user);
+        const token = createToken({userId},expiresTokenIn5Minutes)
+        await Session.updateOne({token}, userSession._id);
+        userSession.token = token;
       }
 
       delete userSession._id;

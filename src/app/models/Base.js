@@ -69,6 +69,27 @@ const Base = {
       await client.close();
     }
   },
+  async updateOne(data, id){
+    try {
+      await client.connect();
+      const foundCollection = database.collection(this.collection);
+
+      const filter = { _id: id };
+      const options = { upsert: false };
+
+      const updateInfo = {
+        $set: { ...data},
+      };
+
+      const result = await foundCollection.updateOne(filter, updateInfo, options);
+     
+      console.log(
+        `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,
+      );
+    } finally {
+      await client.close();
+    }
+  },
   async deleteOne(id){
     try {
       await client.connect();

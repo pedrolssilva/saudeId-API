@@ -8,5 +8,4 @@ server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 server.use(routes);
 
-server.timeout = 50000;
 server.listen(3000, () => { console.log('Server is running')})
