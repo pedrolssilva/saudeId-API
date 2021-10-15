@@ -1,7 +1,8 @@
 const { hash } = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 var {ObjectId} = require("mongodb")
-const Item = require("../models/Item")
+const Item = require("../models/Item");
+const ItemDetail = require("../models/ItemDetail");
 
 module.exports = {
   async index(req,res){
@@ -23,4 +24,20 @@ module.exports = {
      });  
     }
   },
+  async show(req, res){
+    try {
+      const { id } = req.params
+
+      const itemDetailFound = await ItemDetail.findOne({itemId: id})
+      return res.json({itemDetail: itemDetailFound});
+    } catch (error) {
+      console.error(
+        `[IemController - show] error:`,error,
+        );
+      return res.status(500).json({
+        message: error
+     }); 
+    }
+
+  }
 };
