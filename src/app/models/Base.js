@@ -24,6 +24,22 @@ const Base = {
       await client.close();
     }
   },
+  async insertMany(data){
+    try {
+      await client.connect();
+      const foundCollection = database.collection(this.collection);
+      if(foundCollection) {
+        const options = { ordered: true };
+        const result = await foundCollection.insertMany(data, options);
+        console.log(
+        `${result.insertedCount} documents were inserted`,
+        );
+        return result.insertedId;
+      }
+    } finally{
+      await client.close();
+    }
+  },
   async findOne(queryParams){
     try {
       await client.connect();
