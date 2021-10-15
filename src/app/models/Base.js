@@ -34,7 +34,7 @@ const Base = {
         console.log(
         `${result.insertedCount} documents were inserted`,
         );
-        return result.insertedId;
+        return result.insertedIds;
       }
     } finally{
       await client.close();

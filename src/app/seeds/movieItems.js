@@ -1,4 +1,6 @@
 const Item = require("../models/Item")
+const ItemDetail = require("../models/ItemDetail")
+const {ObjectId} = require("mongodb")
 
 const movieItems = [
   {
@@ -67,7 +69,15 @@ const movieItems = [
 ]
 
 async function CreateMovieItems(){ 
-    await Item.insertMany(movieItems);
+    const ids = await Item.insertMany(movieItems);
+    var idsMap = new Map(Object.entries(ids));
+
+   const detailItems = [];
+   for (let objectId of idsMap.values()) {
+      const itemId = new ObjectId(objectId).toString();
+      detailItems.push({ itemId, synopsis: `Some movie description for movie ${itemId}` });
+   }
+    await ItemDetail.insertMany(detailItems)
 }
 
 CreateMovieItems();
