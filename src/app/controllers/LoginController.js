@@ -31,13 +31,15 @@ module.exports = {
   async login(req,res){
     try {
       const {user} = req;
-      console.log(`[LoginController - logout] user:`,user);
+      console.log(`[LoginController - login] user:`,user);
       const userId = new ObjectId(user._id).toString();
-      const expiresTokenIn5Minutes = 300;
+      const expirationToken = Number(process.env.JWT_EXPIRATION_IN);
+      console.log(`[LoginController - login] expirationToken:`,expirationToken);
+      
       
       let userSession = await Session.findOne({userId: userId});
       if(!userSession){
-        const token = createToken({userId},expiresTokenIn5Minutes)
+        const token = createToken({userId},expirationToken)
         
         const sessionInfo = {
           userId,
@@ -51,8 +53,8 @@ module.exports = {
       try {
         validateToken(userSession.token);
       } catch (error) {
-        console.log(`[LoginController - logout] updating token:`,user);
-        const token = createToken({userId},expiresTokenIn5Minutes)
+        console.log(`[LoginController - login] updating token:`,user);
+        const token = createToken({userId},expirationToken)
         await Session.updateOne({token}, userSession._id);
         userSession.token = token;
       }
