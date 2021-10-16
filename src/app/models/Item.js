@@ -7,6 +7,7 @@ async function findManyPaginated(queryParams, options = [],skip = 0, limit = 5) 
   try {
     await client.connect();
     const foundCollection = database.collection(this.collection);
+    const count = await foundCollection.count(); 
 
     const cursor = await foundCollection.find(queryParams, options)
     .skip( skip > 0 ? skip : 0 )
@@ -14,10 +15,17 @@ async function findManyPaginated(queryParams, options = [],skip = 0, limit = 5) 
 
     if ((await cursor.count()) === 0) {
       console.log("[Item - findManyPaginated] No items found!");
-      return [];
+      return {
+        count: 0,
+        items: []
+      };
     }
 
-    return await cursor.toArray();
+    const items = await cursor.toArray();
+    return {
+      count,
+      items
+    };
   } finally {
     await client.close();
   }

@@ -1,6 +1,3 @@
-const { hash } = require("bcryptjs");
-const jwt = require('jsonwebtoken');
-var {ObjectId} = require("mongodb")
 const Item = require("../models/Item");
 const ItemDetail = require("../models/ItemDetail");
 
@@ -13,8 +10,8 @@ module.exports = {
         sort: { _id: 1 }
       }
 
-      const items = await Item.findManyPaginated({Type: 'Movie'}, options, Number(skip), Number(limit));
-      res.json(items);
+      const result = await Item.findManyPaginated({Type: 'Movie'}, options, Number(skip), Number(limit));
+      res.json(result);
     } catch (error) {
       console.error(
         `[IemController - index] error:`,error,
