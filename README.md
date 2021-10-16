@@ -45,7 +45,7 @@ The app will be available in your browser by the address  http://localhost:5000.
 
 ## 💻 Project
 
-project details here
+This API was publihsed and can be used accessing  [Here](https://saude-id-api.herokuapp.com/).
 
 
 ## 📝 License
