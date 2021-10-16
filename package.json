@@ -5,10 +5,11 @@
   "repository": "https://github.com/pedrolssilva/saudeId-API.git",
   "license": "MIT",
   "scripts": {
-    "build": "node src/server.js",
     "start": "npm-run-all -p nodemon",
-    "nodemon": "nodemon src/server.js"
+    "nodemon": "nodemon src/server.js",
+    "build": "webpack"
   },
+  "heroku-run-build-script": true,
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
