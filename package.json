@@ -5,6 +5,7 @@
   "repository": "https://github.com/pedrolssilva/saudeId-API.git",
   "license": "MIT",
   "scripts": {
+    "build": "node src/server.js",
     "start": "npm-run-all -p nodemon",
     "nodemon": "nodemon src/server.js"
   },
