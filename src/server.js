@@ -15,4 +15,4 @@ server.use((error, req, res, next) => {
   res.status(500).json(error);
 })
 
-server.listen(5000, () => { console.log('Server is running')})
+server.listen(process.env.PORT || 5000, () => { console.log('Server is running')})
