@@ -1,0 +1,13 @@
+version: '2'
+services:
+  web:
+    build: .
+    command: npm start
+    volumes:
+      - .:/usr/app/
+      - /usr/app/node_modules
+    ports:
+      - '5000:5000'
+    environment:
+      JWT_SECRET_KEY: SAUDE_ID
+      JWT_EXPIRATION_IN: 1800
