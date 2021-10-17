@@ -22,6 +22,8 @@ This project was developed with the following technologies:
 - [Insomnia](https://insomnia.rest/)
 - [Git](https://git-scm.com/)
 - [Heroku](https://dashboard.heroku.com/apps)
+- [MongoDB](https://www.mongodb.com/)
+- [Atlas Cloud](https://account.mongodb.com/account/login?signedOut=true)
 
 
 ## 🚀 How to execute
