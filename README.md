@@ -21,6 +21,7 @@ This project was developed with the following technologies:
 - [Express](https://expressjs.com/pt-br/)
 - [Insomnia](https://insomnia.rest/)
 - [Git](https://git-scm.com/)
+- [Heroku](https://dashboard.heroku.com/apps)
 
 
 ## 🚀 How to execute
@@ -46,6 +47,82 @@ The app will be available in your browser by the address  http://localhost:5000.
 ## 💻 Project
 
 This API was publihsed and can be used accessing  [Here](https://saude-id-api.herokuapp.com/).
+
+<h3>Description</h3>
+This API was designed to provide a simple list of items and item detail in a paginated way.
+
+To be allowed to get items and item detail is necessary to make a registration and made login to be possible send the required token.
+
+The token has a duration of 30 minutes.
+
+<h3>Available endpoints and how to use those.</h3>
+<p><strong>BaseUrl:</strong> https://saude-id-api.herokuapp.com or http://localhost:5000 (if running locally)</p>
+
+<h4>Register
+	<p><strong>endpoint:</strong> /login/create
+	</br>
+	<strong>type:</strong> POST	
+	</br>
+	<strong>body fields required:</strong> {email, password, repeatPassword}
+	</br>
+	</p>
+</h4>
+
+<h4>Login
+	<p><strong>endpoint:</strong> /login/in
+	</br>
+	<strong>type:</strong> POST	
+	</br>
+	<strong>body fields required:</strong> {email, password}
+	</br>
+	<strong>Return:</strong> {user: text, token: text}
+	</br>
+	</p>
+</h4>
+
+<h4>Logout
+	<p><strong>endpoint:</strong> /login/out
+	</br>
+	<strong>type:</strong> POST	
+	</br>
+	<strong>body fields required:</strong> {email}
+	</br>
+	<strong>Return:</strong> {token: null}
+	</br>
+	</p>
+</h4>
+
+<h4>List items
+	<p><strong>endpoint:</strong> /items/list
+	</br>
+	<strong>type:</strong> GET	
+	</br>
+	<strong>header field required:</strong> [access_token: "token provided in login"]
+	</br>
+	<strong>query params required:</strong> {type: "Movie", skip: 0, limit: 5}
+	</br>
+	<strong>Return:</strong> {count: number, items: array}
+	</br>
+	</p>
+</h4>
+
+<h4>Item detail
+	<p><strong>endpoint:</strong> items/:id
+	</br>
+	<strong>type:</strong> GET	
+	</br>
+	<strong>header field required:</strong> [access_token: "token provided in login"]
+	</br>
+	<strong>params required:</strong> {id: "itemId"}
+	</br>
+	<strong>Return:</strong> {itemDetail: {_id: text, itemId: text, synopsis: text} }
+  }
+}
+	</br>
+	</p>
+</h4>
+
+
 
 
 ## 📝 License
